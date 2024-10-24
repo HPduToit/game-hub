@@ -2,7 +2,7 @@ import "./App.css";
 import { Grid, GridItem, Show } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import GameGrid from "./components/GameGrid";
-import Genrelist from "./components/Genrelist";
+import Genrelist from "./components/GenreList";
 
 function App() {
   // set the templateAreas to define the layout of the grid

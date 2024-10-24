@@ -1,46 +1,12 @@
-import { useEffect, useState } from "react";
-import apiClient from "../services/api-client";
-import { CanceledError } from "axios";
+import useData from './useData';
 
-interface Genre { 
-    id: number;
-    name: string;
+export interface Genre {
+  id: number;
+  name: string;
 }
 
-interface FetchGenresResponse {
-    count: number;
-    results: Genre[];
-}
-
-const useGenres = () => {  
-    const [genres, setGenres] = useState<Genre[]>([]);
-    const [error, setError] = useState('');
-    const [isLoading, setLoading] = useState(false);
-  
-    // The correct way to setLoading(false) would be inside the .final method,
-    // but this does not work with the strict mode turned on, so we do it inside
-    // the callback
-    useEffect(() => {
-      const controller = new AbortController();
-      
-      setLoading(true);
-      // for the instance of CanceltedError bit refer to 10 - creating a custom Hook for Fetching Games 04:30
-      apiClient
-        .get<FetchGenresResponse>('/genres', { signal: controller.signal })
-        .then((res) => {
-          setGenres(res.data.results);
-          setLoading(false);
-        })
-        .catch((err) => {
-          if (err instanceof CanceledError) return;
-          setError(err.message);
-          setLoading(false);
-        });
-  
-      return () => controller.abort();
-    }, []);
-  
-    return { genres, error, isLoading };
-  };
+const useGenres = () => {
+  return useData<Genre>('/genres');
+};
 
 export default useGenres;
