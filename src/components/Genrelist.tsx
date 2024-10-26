@@ -10,13 +10,15 @@ import {
 } from '@chakra-ui/react';
 import useGenres, { Genre } from '../hooks/useGenres';
 import getCroppedImageUrl from '../services/image-url';
+import { select } from 'framer-motion/client';
 
 interface Props {
   onSelectGenre: (genre: Genre) => void;
+  selectedGenre: Genre | null;
 }
 
 /* Components should not know anything about the endpoint or making http requests */
-const Genrelist = ({ onSelectGenre }: Props) => {
+const Genrelist = ({ onSelectGenre, selectedGenre }: Props) => {
   const { data, isLoading, error } = useGenres();
 
   if (error) return null;
@@ -34,6 +36,7 @@ const Genrelist = ({ onSelectGenre }: Props) => {
             {/* <Text fontSize={'lg'}>{genre.name}</Text> */}
             <Button
               fontSize={'lg'}
+              fontWeight={genre.id === selectedGenre?.id ? 'bold' : 'normal'}
               variant={'link'}
               onClick={() => onSelectGenre(genre)}
             >
