@@ -43,7 +43,7 @@ const PlatFormIconList = ({ platforms }: Props) => {
             I think the default for chakra is 4px, so passing 1 would leave you with 4px. Otherwise use e.g. 10px */}
       <HStack marginY={1}>
         {platforms.map((platform) => (
-          <Icon as={iconMap[platform.slug]} color={'gray.500'}></Icon>
+          <Icon key={platform.id} as={iconMap[platform.slug]} color={'gray.500'}></Icon>
           //   https://v2.chakra-ui.com/docs/styled-system/theme
         ))}
       </HStack>
