@@ -1,3 +1,4 @@
+import { GameQuery } from '../App';
 import useData from './useData';
 import { Genre } from './useGenres';
 
@@ -19,13 +20,12 @@ export interface Game {
 
 // const useGames = () => { return useData<Game>('/games');} // this syntax also works        || selected genere can be null so we use optional chaning with the '?'
 const useGames = (
-  selectedGenre: Genre | null,
-  selectedPlatform: Platform | null
+  gameQuery: GameQuery
 ) =>
   useData<Game>(
     '/games',
-    { params: { genres: selectedGenre?.id, platforms: selectedPlatform?.id } },
-    [selectedGenre?.id, selectedPlatform?.id]
+    { params: { genres: gameQuery.genre?.id, platforms: gameQuery.platform?.id } },
+    [gameQuery]
   );
 // above I tried with "{selectedGenre}: Genre | null" but the {} give a error: Property 'selectedGenre' does not exist on type 'Genre | null'
 
