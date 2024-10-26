@@ -1,5 +1,5 @@
 import './App.css';
-import { Grid, GridItem, Show } from '@chakra-ui/react';
+import { Grid, GridItem, HStack, Show } from '@chakra-ui/react';
 import NavBar from './components/NavBar';
 import GameGrid from './components/GameGrid';
 import GenreList from './components/GenreList';
@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Genre } from './hooks/useGenres';
 import PlatformSelector from './components/PlatformSelector';
 import { Platform } from './hooks/useGames';
+import SortSelector from './components/sortSelector';
 
 /* We only had two state variables, but as you add more you would like to put all these
   related variables inside an object. For this reason we use what is called a query object pattern. 
@@ -51,13 +52,17 @@ function App() {
         </GridItem>
       </Show>
       <GridItem area="main" paddingX={5}>
-        <PlatformSelector
-          selectedPlatform={gameQuery.platform}
-          onSelectPlatform={(platform) =>
-            setGameQuery({ ...gameQuery, platform })
-          }
-          // onSelectPlatform={(platform) => setSelectedPlatform(platform)}
-        />
+        {/* The paddingleft lines the PlatformSelector up with the first card */}
+        <HStack spacing={5} paddingLeft={2} marginBottom={3}>
+          <PlatformSelector
+            selectedPlatform={gameQuery.platform}
+            onSelectPlatform={(platform) =>
+              setGameQuery({ ...gameQuery, platform })
+            }
+            // onSelectPlatform={(platform) => setSelectedPlatform(platform)}
+          />
+          <SortSelector></SortSelector>
+        </HStack>
         <GameGrid gameQuery={gameQuery} />
       </GridItem>
     </Grid>
