@@ -15,6 +15,7 @@ import SortSelector from './components/sortSelector';
 export interface GameQuery {
   genre: Genre | null;
   platform: Platform | null;
+  sortOrder: string;
 }
 
 // This is what our state variables looked like before we made the change to gameQuery which contains all of them
@@ -61,7 +62,14 @@ function App() {
             }
             // onSelectPlatform={(platform) => setSelectedPlatform(platform)}
           />
-          <SortSelector></SortSelector>
+          {/* Set to a function that takes the new sortOrder (i.e. first (sortOrder) parameter) 
+          which causes our app to rerender and it will pass the new gameQuery object to GameGrid */}
+          <SortSelector
+            onSelectSortOrder={(sortOrder) =>
+              setGameQuery({ ...gameQuery, sortOrder })
+            }
+            sortOrder={gameQuery.sortOrder}
+          ></SortSelector>
         </HStack>
         <GameGrid gameQuery={gameQuery} />
       </GridItem>
