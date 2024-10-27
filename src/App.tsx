@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Genre } from './hooks/useGenres';
 import PlatformSelector from './components/PlatformSelector';
 import { Platform } from './hooks/useGames';
-import SortSelector from './components/sortSelector';
+import SortSelector from './components/SortSelector';
 
 /* We only had two state variables, but as you add more you would like to put all these
   related variables inside an object. For this reason we use what is called a query object pattern. 
@@ -16,6 +16,7 @@ export interface GameQuery {
   genre: Genre | null;
   platform: Platform | null;
   sortOrder: string;
+  searchText: string;
 }
 
 // This is what our state variables looked like before we made the change to gameQuery which contains all of them
@@ -42,7 +43,7 @@ function App() {
       }}
     >
       <GridItem area="nav">
-        <NavBar />
+        <NavBar onSearch={(searchText) => setGameQuery({...gameQuery, searchText})}/>
       </GridItem>
       <Show above="lg">
         <GridItem area="aside">
