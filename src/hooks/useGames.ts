@@ -12,6 +12,7 @@ export interface Game {
   name: string;
   background_image: string;
   metacritic: number;
+  rating_top: number;
   parent_platforms: { platform: Platform }[];
   // The parent_platform is not a Playform[] (platform array)
   // It is a array of objects where each object has a property called platform of type Platform
