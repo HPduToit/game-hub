@@ -8,6 +8,7 @@ import { Genre } from './hooks/useGenres';
 import PlatformSelector from './components/PlatformSelector';
 import { Platform } from './hooks/useGames';
 import SortSelector from './components/SortSelector';
+import GameHeading from './components/GameHeading';
 
 /* We only had two state variables, but as you add more you would like to put all these
   related variables inside an object. For this reason we use what is called a query object pattern. 
@@ -43,7 +44,9 @@ function App() {
       }}
     >
       <GridItem area="nav">
-        <NavBar onSearch={(searchText) => setGameQuery({...gameQuery, searchText})}/>
+        <NavBar
+          onSearch={(searchText) => setGameQuery({ ...gameQuery, searchText })}
+        />
       </GridItem>
       <Show above="lg">
         <GridItem area="aside">
@@ -54,26 +57,29 @@ function App() {
         </GridItem>
       </Show>
       <GridItem area="main" paddingX={5}>
+        <Box paddingLeft={2}>
+        <GameHeading gameQuery={gameQuery} />
         {/* The paddingleft lines the PlatformSelector up with the first card */}
-        <Flex paddingLeft={2} marginBottom={3}>
-          <Box marginRight={5}>
-            <PlatformSelector
-              selectedPlatform={gameQuery.platform}
-              onSelectPlatform={(platform) =>
-                setGameQuery({ ...gameQuery, platform })
+          <Flex marginBottom={5}>
+            <Box marginRight={5}>
+              <PlatformSelector
+                selectedPlatform={gameQuery.platform}
+                onSelectPlatform={(platform) =>
+                  setGameQuery({ ...gameQuery, platform })
+                }
+                // onSelectPlatform={(platform) => setSelectedPlatform(platform)}
+              />
+            </Box>
+            {/* Set to a function that takes the new sortOrder (i.e. first (sortOrder) parameter)
+            which causes our app to rerender and it will pass the new gameQuery object to GameGrid */}
+            <SortSelector
+              onSelectSortOrder={(sortOrder) =>
+                setGameQuery({ ...gameQuery, sortOrder })
               }
-              // onSelectPlatform={(platform) => setSelectedPlatform(platform)}
-            />
-          </Box>
-          {/* Set to a function that takes the new sortOrder (i.e. first (sortOrder) parameter) 
-          which causes our app to rerender and it will pass the new gameQuery object to GameGrid */}
-          <SortSelector
-            onSelectSortOrder={(sortOrder) =>
-              setGameQuery({ ...gameQuery, sortOrder })
-            }
-            sortOrder={gameQuery.sortOrder}
-          ></SortSelector>
-        </Flex>
+              sortOrder={gameQuery.sortOrder}
+            ></SortSelector>
+          </Flex>
+        </Box>
         <GameGrid gameQuery={gameQuery} />
       </GridItem>
     </Grid>
